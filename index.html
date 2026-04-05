@@ -450,7 +450,7 @@ function buildReport(){
 
   const roleLabels={DAF:'DAF',DC:'Directeur du crédit',DSI:'DSI',DR:'Directeur des risques'};
   const roleLabel=roleLabels[prof.role]||'vous';
-  document.getElementById('rep-summary').textContent=`En tant que ${roleLabel}, votre dispositif data présente un niveau ${lv.label.toLowerCase()}. ${total<60?'Des axes d'amélioration prioritaires ont été identifiés.':'Votre maturité data est un atout. Quelques optimisations ciblées peuvent encore renforcer votre position.'}`;
+  document.getElementById('rep-summary').textContent=`En tant que ${roleLabel}, votre dispositif data présente un niveau ${lv.label.toLowerCase()}. ${total<60?"Des axes prioritaires identifiés pour votre banque.":"Votre maturité data est un atout réel. Des optimisations ciblées peuvent encore renforcer votre position."}`;
 
   const worst=dimScores.map((s,i)=>({s,i})).sort((a,b)=>a.s-b.s).slice(0,2);
   document.getElementById('rep-mcards').innerHTML=[
