@@ -3,522 +3,223 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diagnostic Maturité Data Bancaire CEMAC — DP-Tech</title>
-<meta name="description" content="Évaluez en 8 minutes la maturité data de votre banque : qualité des données créances, reporting COBAC, conformité DEC 2001, surveillance NPL et gouvernance SI. Outil gratuit par DP-Tech.">
+<title>Diagnostic Maturit&#233; Data Bancaire CEMAC &#8212; DP-Tech</title>
+<meta name="description" content="&#201;valuez en 8 minutes la maturit&#233; data de votre banque CEMAC. Qualit&#233; des donn&#233;es cr&#233;ances, reporting COBAC, conformit&#233; DEC 2001, surveillance NPL. Outil gratuit par DP-Tech.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://duvalpeme.github.io/diagnostic-maturite-data-cemac/">
-<meta property="og:title" content="Diagnostic Maturité Data Bancaire CEMAC — Gratuit — DP-Tech">
-<meta property="og:description" content="25 questions, 5 dimensions, 8 minutes. Obtenez votre score de maturité data et 3 recommandations personnalisées pour votre banque CEMAC.">
-<meta property="og:image" content="https://duvalpeme.github.io/diagnostic-maturite-data-cemac/og-image.png">
+<meta property="og:url" content="https://UlrichPeme.github.io/diagnostic-maturite-data-cemac/">
+<meta property="og:title" content="Diagnostic Maturit&#233; Data Bancaire CEMAC &#8212; DP-Tech">
+<meta property="og:description" content="25 questions, 5 dimensions, 8 minutes. Score + rapport PDF + recommandations personnalis&#233;es.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Diagnostic Maturité Data Bancaire CEMAC — DP-Tech">
-<meta name="twitter:description" content="25 questions, 5 dimensions, 8 minutes. Score de maturité data + recommandations personnalisées.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%231D9E75'/><text y='22' x='5' font-size='20' font-family='Arial' font-weight='bold' fill='white'>D</text></svg>">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%231D9E75'/><text y='22' x='6' font-size='18' font-family='Arial' font-weight='bold' fill='white'>D</text></svg>">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --teal: #1d469e; --teal-dark: #0f1d6e; --teal-darker: #081b50;
-    --teal-light: #E1F5EE; --teal-mid: #5d8cca;
-    --purple: #7F77DD; --purple-dark: #3C3489; --purple-light: #EEEDFE;
-    --amber: #BA7517; --amber-dark: #633806; --amber-light: #FAEEDA;
-    --coral: #D85A30; --coral-dark: #712B13; --coral-light: #FAECE7;
-    --blue: #378ADD; --blue-dark: #0C447C; --blue-light: #E6F1FB;
-    --red: #E24B4A; --red-dark: #791F1F; --red-light: #FCEBEB;
-    --text: #1A1A1A; --text-mid: #444444; --text-muted: #777777; --text-hint: #AAAAAA;
-    --bg: #FFFFFF; --bg2: #F6F6F4; --bg3: #EFEFED;
-    --border: rgba(0,0,0,0.12); --border-mid: rgba(0,0,0,0.2);
-    --radius: 10px; --radius-lg: 14px;
-    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  }
-  html { font-size: 15px; }
-  body { font-family: var(--font); background: var(--bg2); color: var(--text); min-height: 100vh; }
-  .app { max-width: 680px; margin: 0 auto; padding: 0 16px 60px; }
-  .header { display: flex; align-items: center; gap: 10px; padding: 20px 0 28px; }
-  .header-logo { width: 36px; height: 36px; background: var(--teal); border-radius: 9px; display: flex; align-items: center; justify-content: center; }
-  .header-logo svg { width: 20px; height: 20px; }
-  .header-brand { font-size: 13px; font-weight: 600; color: var(--teal-dark); }
-  .header-site { font-size: 12px; color: var(--text-muted); }
-  .header-right { margin-left: auto; }
-  .header-link { font-size: 12px; color: var(--teal); text-decoration: none; border: 0.5px solid var(--teal); padding: 5px 12px; border-radius: 20px; }
-  .header-link:hover { background: var(--teal-light); }
-
-  .screen { display: none; }
-  .screen.on { display: block; }
-
-  .card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 16px 18px; margin-bottom: 10px; }
-  .card-sm { padding: 12px 14px; }
-  .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
-  .badge-teal { background: var(--teal-light); color: var(--teal-darker); }
-  .badge-purple { background: var(--purple-light); color: var(--purple-dark); }
-  .badge-amber { background: var(--amber-light); color: var(--amber-dark); }
-  .badge-coral { background: var(--coral-light); color: var(--coral-dark); }
-  .badge-blue { background: var(--blue-light); color: var(--blue-dark); }
-  .badge-gray { background: var(--bg3); color: var(--text-mid); }
-
-  .btn { display: block; width: 100%; padding: 11px 20px; border-radius: var(--radius); border: 0.5px solid var(--border-mid); font-size: 14px; font-weight: 500; cursor: pointer; background: var(--bg); color: var(--text); text-align: center; transition: background .15s; font-family: var(--font); margin-top: 8px; }
-  .btn:hover { background: var(--bg2); }
-  .btn-primary { background: var(--teal); border-color: var(--teal-dark); color: #fff; }
-  .btn-primary:hover { background: var(--teal-dark); }
-  .btn-sm { font-size: 12px; padding: 7px 14px; color: var(--text-muted); border-color: var(--border); }
-
-  .mcard-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; margin-bottom: 16px; }
-  .mcard { background: var(--bg3); border-radius: var(--radius); padding: 12px 14px; }
-  .mcard-lbl { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
-  .mcard-val { font-size: 20px; font-weight: 600; color: var(--text); line-height: 1.2; }
-  .mcard-sub { font-size: 11px; color: var(--text-hint); margin-top: 2px; }
-
-  .prog-wrap { width: 100%; height: 4px; background: var(--bg3); border-radius: 2px; margin-bottom: 20px; overflow: hidden; }
-  .prog-fill { height: 4px; border-radius: 2px; background: var(--teal); transition: width .4s ease; }
-
-  .q-dim-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 14px; }
-  .q-text { font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.5; margin-bottom: 16px; }
-  .q-counter { font-size: 12px; color: var(--text-hint); float: right; margin-top: -34px; }
-  .opt-btn { display: block; width: 100%; text-align: left; padding: 11px 14px; border-radius: var(--radius); border: 0.5px solid var(--border); font-size: 13px; cursor: pointer; background: var(--bg); color: var(--text-mid); margin-bottom: 7px; line-height: 1.4; transition: all .12s; font-family: var(--font); }
-  .opt-btn:hover { background: var(--bg2); border-color: var(--border-mid); color: var(--text); }
-  .opt-btn.sel { border-color: var(--teal); background: var(--teal-light); color: var(--teal-darker); font-weight: 500; }
-  .q-nav { display: flex; gap: 8px; margin-top: 6px; }
-  .q-nav .btn { flex: 1; }
-  .btn-back { flex: 0 0 auto; width: auto; padding: 11px 18px; }
-
-  .sel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
-  .sel-grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
-  .sel-opt { padding: 10px 12px; border-radius: var(--radius); border: 0.5px solid var(--border); font-size: 13px; cursor: pointer; background: var(--bg); color: var(--text-mid); text-align: center; transition: all .12s; line-height: 1.4; }
-  .sel-opt:hover { background: var(--bg2); }
-  .sel-opt.sel { border-color: var(--purple); background: var(--purple-light); color: var(--purple-dark); font-weight: 500; }
-
-  .dim-bars { }
-  .dim-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-  .dim-bar-lbl { font-size: 12px; color: var(--text-mid); width: 120px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .dim-bar-track { flex: 1; height: 8px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
-  .dim-bar-fill { height: 8px; border-radius: 4px; transition: width .6s ease; }
-  .dim-bar-val { font-size: 12px; font-weight: 600; color: var(--text); width: 34px; text-align: right; flex-shrink: 0; }
-
-  .rec-item { border-left: 3px solid var(--teal); padding: 11px 14px; background: var(--bg3); border-radius: 0 var(--radius) var(--radius) 0; margin-bottom: 8px; }
-  .rec-priority { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; }
-  .rec-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
-  .rec-detail { font-size: 12px; color: var(--text-mid); line-height: 1.5; }
-
-  .cta-box { background: var(--teal-light); border: 0.5px solid var(--teal-mid); border-radius: var(--radius-lg); padding: 18px; margin: 16px 0; }
-  .cta-box-title { font-size: 14px; font-weight: 600; color: var(--teal-darker); margin-bottom: 6px; }
-  .cta-box-text { font-size: 13px; color: var(--teal-dark); line-height: 1.5; margin-bottom: 12px; }
-
-  .score-big { text-align: center; padding: 12px 0 8px; }
-  .score-num { font-size: 56px; font-weight: 700; line-height: 1; }
-  .score-denom { font-size: 22px; font-weight: 400; color: var(--text-muted); }
-  .level-pill { display: inline-block; padding: 5px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-top: 8px; }
-
-  input[type="text"], input[type="email"] {
-    width: 100%; padding: 10px 13px; border: 0.5px solid var(--border-mid);
-    border-radius: var(--radius); font-size: 14px; font-family: var(--font);
-    background: var(--bg); color: var(--text); margin-bottom: 8px; outline: none;
-  }
-  input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(29,158,117,.15); }
-
-  .footer { text-align: center; padding: 32px 0 0; font-size: 12px; color: var(--text-hint); line-height: 1.8; }
-  .footer a { color: var(--teal); text-decoration: none; }
-  .footer a:hover { text-decoration: underline; }
-
-  @media (max-width: 480px) {
-    .mcard-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
-    .mcard-val { font-size: 17px; }
-    .sel-grid { grid-template-columns: 1fr 1fr; }
-    .sel-grid-3 { grid-template-columns: 1fr 1fr; }
-    .score-num { font-size: 44px; }
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --tl:#1D9E75;--tl-dk:#0F6E56;--tl-dkr:#085041;--tl-lt:#E1F5EE;--tl-md:#5DCAA5;
+  --pu:#7F77DD;--pu-dk:#3C3489;--pu-lt:#EEEDFE;
+  --t1:#1A1A1A;--t2:#444;--t3:#777;--t4:#aaa;
+  --bg:#fff;--bg2:#F6F6F4;--bg3:#EFEFED;
+  --br:rgba(0,0,0,0.12);--br2:rgba(0,0,0,0.22);
+  --r:10px;--rlg:14px;
+  --fn:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+html{font-size:15px;}
+body{font-family:var(--fn);background:var(--bg2);color:var(--t1);min-height:100vh;}
+.app{max-width:660px;margin:0 auto;padding:0 16px 60px;}
+.hdr{display:flex;align-items:center;gap:10px;padding:18px 0 24px;}
+.hdr-logo{width:36px;height:36px;background:var(--tl);border-radius:9px;display:flex;align-items:center;justify-content:center;}
+.hdr-logo svg{width:20px;height:20px;}
+.hdr-brand{font-size:13px;font-weight:600;color:var(--tl-dk);}
+.hdr-sub{font-size:11px;color:var(--t3);}
+.hdr-url{margin-left:auto;font-size:12px;color:var(--tl);text-decoration:none;border:0.5px solid var(--tl);padding:5px 12px;border-radius:20px;}
+.hdr-url:hover{background:var(--tl-lt);}
+.screen{display:none;}.screen.on{display:block;}
+.card{background:var(--bg);border:0.5px solid var(--br);border-radius:var(--rlg);padding:16px 18px;margin-bottom:10px;}
+.btn{display:block;width:100%;padding:11px 20px;border-radius:var(--r);border:0.5px solid var(--br2);font-size:14px;font-weight:500;cursor:pointer;background:var(--bg);color:var(--t1);text-align:center;font-family:var(--fn);margin-top:8px;}
+.btn:hover{background:var(--bg2);}
+.btn-p{background:var(--tl);border-color:var(--tl-dk);color:#fff;}
+.btn-p:hover{background:var(--tl-dk);}
+.btn-green{background:#1D9E75;border-color:#0F6E56;color:#fff;font-size:15px;padding:13px 20px;}
+.btn-green:hover{background:#0F6E56;}
+.btn-sm{font-size:12px;padding:7px 14px;color:var(--t3);border-color:var(--br);}
+.btn:disabled,.btn[disabled]{opacity:0.4;cursor:not-allowed;pointer-events:none;}
+.mcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:16px;}
+.mc{background:var(--bg3);border-radius:var(--r);padding:12px 14px;}
+.mc-l{font-size:11px;color:var(--t3);margin-bottom:4px;}
+.mc-v{font-size:20px;font-weight:600;line-height:1.2;}
+.mc-s{font-size:11px;color:var(--t4);margin-top:2px;}
+.prog{width:100%;height:4px;background:var(--bg3);border-radius:2px;margin-bottom:20px;overflow:hidden;}
+.prog-f{height:4px;border-radius:2px;background:var(--tl);transition:width .4s ease;}
+.qlabel{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px;}
+.qtext{font-size:15px;font-weight:500;line-height:1.5;margin-bottom:16px;}
+.qcount{font-size:12px;color:var(--t4);text-align:right;margin-bottom:12px;}
+.opt{display:block;width:100%;text-align:left;padding:11px 14px;border-radius:var(--r);border:0.5px solid var(--br);font-size:13px;cursor:pointer;background:var(--bg);color:var(--t2);margin-bottom:7px;line-height:1.4;font-family:var(--fn);}
+.opt:hover{background:var(--bg2);border-color:var(--br2);}
+.opt.sel{border-color:var(--tl);background:var(--tl-lt);color:var(--tl-dkr);font-weight:500;}
+.qnav{display:flex;gap:8px;margin-top:6px;}
+.qnav .btn{flex:1;margin-top:0;}
+.btn-bk{flex:0 0 auto !important;width:auto !important;padding:11px 18px;}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.sgrid3{grid-template-columns:repeat(3,minmax(0,1fr));}
+.sopt{padding:10px 12px;border-radius:var(--r);border:0.5px solid var(--br);font-size:13px;cursor:pointer;background:var(--bg);color:var(--t2);text-align:center;font-family:var(--fn);width:100%;}
+.sopt:hover{background:var(--bg2);}
+.sopt.sel{border-color:var(--pu);background:var(--pu-lt);color:var(--pu-dk);font-weight:500;}
+.dbar{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.dbar-l{font-size:12px;color:var(--t2);width:110px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dbar-t{flex:1;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;}
+.dbar-f{height:8px;border-radius:4px;transition:width .6s ease;}
+.dbar-v{font-size:12px;font-weight:600;width:34px;text-align:right;flex-shrink:0;}
+.rec{border-left:3px solid var(--tl);padding:11px 14px;background:var(--bg3);border-radius:0 var(--r) var(--r) 0;margin-bottom:8px;}
+.rec-p{font-size:11px;font-weight:600;color:var(--t3);margin-bottom:4px;}
+.rec-t{font-size:13px;font-weight:600;color:var(--t1);margin-bottom:3px;}
+.rec-d{font-size:12px;color:var(--t2);line-height:1.5;}
+.ctabox{background:var(--tl-lt);border:1px solid var(--tl-md);border-radius:var(--rlg);padding:20px;margin:16px 0;}
+.ctabox-t{font-size:15px;font-weight:700;color:var(--tl-dkr);margin-bottom:6px;}
+.ctabox-d{font-size:13px;color:var(--tl-dk);line-height:1.6;margin-bottom:14px;}
+.score-n{font-size:52px;font-weight:700;line-height:1;}
+.score-d{font-size:20px;font-weight:400;color:var(--t3);}
+.lpill{display:inline-block;padding:5px 16px;border-radius:20px;font-size:13px;font-weight:600;margin-top:8px;}
+.notify{padding:10px 14px;border-radius:var(--r);font-size:13px;margin-bottom:10px;display:none;}
+.notify.ok{background:#E1F5EE;color:#085041;display:block;}
+.notify.err{background:#FCEBEB;color:#791F1F;display:block;}
+.ftr{text-align:center;padding:32px 0 0;font-size:12px;color:var(--t4);line-height:1.8;}
+.ftr a{color:var(--tl);text-decoration:none;}
+input[type=text],input[type=email]{width:100%;padding:10px 13px;border:0.5px solid var(--br2);border-radius:var(--r);font-size:14px;font-family:var(--fn);background:var(--bg);color:var(--t1);margin-bottom:8px;outline:none;}
+input:focus{border-color:var(--tl);}
+@media(max-width:480px){.sgrid3{grid-template-columns:1fr 1fr;}.score-n{font-size:40px;}}
 </style>
 </head>
 <body>
 <div class="app">
-
-  <div class="header">
-    <div class="header-logo">
-      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="2" y="10" width="3" height="8" rx="1" fill="white"/>
-        <rect x="7" y="6" width="3" height="12" rx="1" fill="white"/>
-        <rect x="12" y="2" width="3" height="16" rx="1" fill="white"/>
-        <rect x="17" y="7" width="1.5" height="1.5" rx="0.75" fill="white"/>
-      </svg>
-    </div>
-    <div>
-      <div class="header-brand">DP-Tech</div>
-      <div class="header-site">Consulting BI Bancaire CEMAC</div>
-    </div>
-    <div class="header-right">
-      <a href="https://duvalpeme.tech" target="_blank" class="header-link">duvalpeme.tech ↗</a>
-    </div>
+  <div class="hdr">
+    <div class="hdr-logo"><svg viewBox="0 0 20 20" fill="none"><rect x="2" y="10" width="3" height="8" rx="1" fill="white"/><rect x="7" y="6" width="3" height="12" rx="1" fill="white"/><rect x="12" y="2" width="3" height="16" rx="1" fill="white"/></svg></div>
+    <div><div class="hdr-brand">DP-Tech</div><div class="hdr-sub">Consulting BI Bancaire CEMAC</div></div>
+    <a href="https://UlrichPeme.github.io" target="_blank" class="hdr-url">UlrichPeme.github.io &#8599;</a>
   </div>
 
-  <!-- INTRO -->
   <div id="s-intro" class="screen on">
-    <div style="text-align:center;padding:8px 0 24px;">
-      <p style="font-size:11px;font-weight:600;color:var(--teal-dark);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;">Outil gratuit · DP-Tech</p>
-      <h1 style="font-size:22px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:10px;">Diagnostic maturité data<br>bancaire CEMAC</h1>
-      <p style="font-size:14px;color:var(--text-mid);max-width:420px;margin:0 auto 24px;line-height:1.7;">Évaluez en 8 minutes la solidité de votre dispositif data sur les créances, le reporting COBAC, la conformité DEC 2001 et la surveillance NPL.</p>
+    <div style="text-align:center;padding:6px 0 22px;">
+      <p style="font-size:11px;font-weight:600;color:var(--tl-dk);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;">Outil gratuit &middot; DP-Tech</p>
+      <h1 style="font-size:22px;font-weight:700;line-height:1.3;margin-bottom:10px;">Diagnostic maturit&#233; data<br>bancaire CEMAC</h1>
+      <p style="font-size:14px;color:var(--t2);max-width:420px;margin:0 auto 22px;line-height:1.7;">&#201;valuez en 8 minutes la solidit&#233; de votre dispositif data sur les cr&#233;ances, le reporting COBAC et la conformit&#233; DEC&nbsp;2001.</p>
     </div>
-    <div class="mcard-grid">
-      <div class="mcard"><div class="mcard-lbl">Questions</div><div class="mcard-val">25</div><div class="mcard-sub">5 dimensions</div></div>
-      <div class="mcard"><div class="mcard-lbl">Durée</div><div class="mcard-val">~8 min</div><div class="mcard-sub">À votre rythme</div></div>
-      <div class="mcard"><div class="mcard-lbl">Résultat</div><div class="mcard-val">Score</div><div class="mcard-sub">Radar + rapport</div></div>
+    <div class="mcards">
+      <div class="mc"><div class="mc-l">Questions</div><div class="mc-v">25</div><div class="mc-s">5 dimensions</div></div>
+      <div class="mc"><div class="mc-l">Dur&#233;e</div><div class="mc-v">~8 min</div><div class="mc-s">&#192; votre rythme</div></div>
+      <div class="mc"><div class="mc-l">R&#233;sultat</div><div class="mc-v">Score+PDF</div><div class="mc-s">Envoy&#233; par email</div></div>
     </div>
-    <div class="card card-sm" style="margin-bottom:16px;">
-      <p style="font-size:13px;color:var(--text-mid);line-height:1.6;">Ce diagnostic est conçu pour les <strong>DAF, Directeurs du crédit, DSI et Directeurs des risques</strong> des banques et établissements financiers de la zone CEMAC. Il évalue 5 dimensions clés de votre maturité data.</p>
-    </div>
-    <button class="btn btn-primary" onclick="goProfile()">Démarrer le diagnostic →</button>
-    <p style="text-align:center;font-size:12px;color:var(--text-hint);margin-top:12px;">Gratuit · Sans engagement · Résultat immédiat</p>
+    <div class="card" style="margin-bottom:16px;"><p style="font-size:13px;color:var(--t2);line-height:1.6;">Con&#231;u pour les <strong>DAF, Directeurs du cr&#233;dit, DSI et Directeurs des risques</strong> des banques et &#233;tablissements financiers de la zone CEMAC.</p></div>
+    <button class="btn btn-p" id="btn-intro">D&#233;marrer le diagnostic &#8594;</button>
+    <p style="text-align:center;font-size:12px;color:var(--t4);margin-top:10px;">Gratuit &middot; Sans engagement &middot; Rapport PDF par email</p>
   </div>
 
-  <!-- PROFILE -->
   <div id="s-profile" class="screen">
-    <div style="margin-bottom:20px;">
-      <h2 style="font-size:17px;font-weight:600;color:var(--text);margin-bottom:4px;">Votre profil</h2>
-      <p style="font-size:13px;color:var(--text-muted);">Ces informations personnalisent vos recommandations finales.</p>
+    <h2 style="font-size:17px;font-weight:600;margin-bottom:4px;">Votre profil</h2>
+    <p style="font-size:13px;color:var(--t3);margin-bottom:18px;">Personnalise vos recommandations finales.</p>
+    <p style="font-size:13px;font-weight:500;margin-bottom:8px;">Votre fonction</p>
+    <div class="sgrid" id="grp-role">
+      <button class="sopt" data-val="DAF">Directeur administratif et financier</button>
+      <button class="sopt" data-val="DC">Directeur du cr&#233;dit</button>
+      <button class="sopt" data-val="DSI">Directeur des syst&#232;mes d&#8217;info</button>
+      <button class="sopt" data-val="DR">Directeur des risques</button>
     </div>
-
-    <div style="margin-bottom:16px;">
-      <p style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:8px;">Votre fonction</p>
-      <div class="sel-grid">
-        <div class="sel-opt" onclick="selP('role',this,'DAF')">Direction administrative et financiere</div>
-        <div class="sel-opt" onclick="selP('role',this,'DC')">Direction du crédit</div>
-        <div class="sel-opt" onclick="selP('role',this,'DSI')">Direction des systèmes d'info</div>
-        <div class="sel-opt" onclick="selP('role',this,'DR')">Direction des risques</div>
-      </div>
+    <p style="font-size:13px;font-weight:500;margin-bottom:8px;">Taille du bilan</p>
+    <div class="sgrid sgrid3" id="grp-size">
+      <button class="sopt" data-val="S">&lt; 50 Mds FCFA</button>
+      <button class="sopt" data-val="M">50 &#8211; 200 Mds FCFA</button>
+      <button class="sopt" data-val="L">&gt; 200 Mds FCFA</button>
     </div>
-    <div style="margin-bottom:16px;">
-      <p style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:8px;">Taille du bilan de votre institution</p>
-      <div class="sel-grid sel-grid-3">
-        <div class="sel-opt" onclick="selP('size',this,'S')">&lt; 50 Mds FCFA</div>
-        <div class="sel-opt" onclick="selP('size',this,'M')">50 – 200 Mds FCFA</div>
-        <div class="sel-opt" onclick="selP('size',this,'L')">&gt; 200 Mds FCFA</div>
-      </div>
+    <p style="font-size:13px;font-weight:500;margin-bottom:8px;">Pays</p>
+    <div class="sgrid sgrid3" id="grp-country">
+      <button class="sopt" data-val="CMR">Cameroun</button>
+      <button class="sopt" data-val="GAB">Gabon</button>
+      <button class="sopt" data-val="CGO">Congo</button>
+      <button class="sopt" data-val="TCD">Tchad</button>
+      <button class="sopt" data-val="RCA">RCA</button>
+      <button class="sopt" data-val="GEQ">Guin&#233;e &#201;q.</button>
     </div>
-    <div style="margin-bottom:20px;">
-      <p style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:8px;">Pays</p>
-      <div class="sel-grid sel-grid-3">
-        <div class="sel-opt" onclick="selP('country',this,'CMR')">Cameroun</div>
-        <div class="sel-opt" onclick="selP('country',this,'GAB')">Gabon</div>
-        <div class="sel-opt" onclick="selP('country',this,'CGO')">Congo</div>
-        <div class="sel-opt" onclick="selP('country',this,'TCD')">Tchad</div>
-        <div class="sel-opt" onclick="selP('country',this,'RCA')">RCA</div>
-        <div class="sel-opt" onclick="selP('country',this,'GEQ')">Guinée Éq.</div>
-      </div>
-    </div>
-    <button class="btn btn-primary" id="btn-startq" onclick="startQ()" disabled style="opacity:.4;cursor:not-allowed;">Commencer les questions →</button>
-    <button class="btn btn-sm" onclick="show('s-intro')">← Retour</button>
+    <button class="btn btn-p" id="btn-startq" disabled>Commencer les questions &#8594;</button>
+    <button class="btn btn-sm" id="btn-back">&#8592; Retour</button>
   </div>
 
-  <!-- QUESTION -->
   <div id="s-question" class="screen">
-    <div class="prog-wrap"><div class="prog-fill" id="prog"></div></div>
-    <div class="q-dim-label" id="q-dlabel"></div>
-    <div class="q-counter" id="q-counter"></div>
-    <div class="q-text" id="q-text"></div>
+    <div class="prog"><div class="prog-f" id="prog-f"></div></div>
+    <div class="qlabel" id="q-lbl"></div>
+    <div class="qcount" id="q-cnt"></div>
+    <div class="qtext" id="q-txt"></div>
     <div id="q-opts"></div>
-    <div class="q-nav">
-      <button class="btn btn-back" id="btn-pq" onclick="prevQ()" style="display:none;">←</button>
-      <button class="btn btn-primary" id="btn-nq" onclick="nextQ()">Suivant →</button>
+    <div class="qnav">
+      <button class="btn btn-bk" id="btn-prev" style="display:none;">&#8592;</button>
+      <button class="btn btn-p" id="btn-next">Suivant &#8594;</button>
     </div>
   </div>
 
-  <!-- DIM SCORE -->
-  <div id="s-dimscore" class="screen">
-    <div style="text-align:center;padding:8px 0 20px;">
-      <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px;" id="ds-dname"></p>
-      <div style="font-size:52px;font-weight:700;line-height:1;" id="ds-score"></div>
-      <div style="font-size:14px;color:var(--text-muted);margin-top:4px;">points sur 20</div>
-      <div id="ds-pill" style="margin-top:10px;"></div>
+  <div id="s-dim" class="screen">
+    <div style="text-align:center;padding:8px 0 18px;">
+      <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px;" id="dd-name"></p>
+      <div style="font-size:50px;font-weight:700;line-height:1;" id="dd-num"></div>
+      <div style="font-size:14px;color:var(--t3);margin-top:4px;">points sur 20</div>
+      <div id="dd-pill" style="margin-top:10px;"></div>
     </div>
-    <div class="card" style="margin-bottom:16px;">
-      <p style="font-size:13px;color:var(--text-mid);line-height:1.6;" id="ds-comment"></p>
-    </div>
-    <button class="btn btn-primary" id="btn-dsnext" onclick="dsContinue()">Continuer →</button>
+    <div class="card" style="margin-bottom:16px;"><p style="font-size:13px;color:var(--t2);line-height:1.6;" id="dd-cmt"></p></div>
+    <button class="btn btn-p" id="btn-dd-next">Continuer &#8594;</button>
   </div>
 
-  <!-- CAPTURE EMAIL -->
   <div id="s-capture" class="screen">
-    <div style="margin-bottom:20px;">
-      <div style="font-size:32px;text-align:center;margin-bottom:10px;">✓</div>
-      <h2 style="font-size:17px;font-weight:600;text-align:center;margin-bottom:6px;">Votre rapport est prêt</h2>
-      <p style="font-size:13px;color:var(--text-muted);text-align:center;line-height:1.6;">Entrez votre email pour recevoir le rapport personnalisé et être contacté par DP-Tech pour un audit approfondi gratuit.</p>
+    <div style="text-align:center;margin-bottom:18px;">
+      <div style="font-size:28px;color:var(--tl);margin-bottom:10px;">&#10003;</div>
+      <h2 style="font-size:17px;font-weight:600;margin-bottom:6px;">Votre rapport est pr&#234;t</h2>
+      <p style="font-size:13px;color:var(--t3);line-height:1.6;">Entrez votre email pour recevoir le <strong>rapport PDF</strong> directement dans votre bo&#238;te mail.</p>
     </div>
-    <div class="card" style="margin-bottom:4px;">
-      <input type="text" id="cap-name" placeholder="Prénom et nom">
-      <input type="email" id="cap-email" placeholder="Email professionnel">
-      <button class="btn btn-primary" onclick="goReport()" style="margin-top:4px;">Voir mon score et rapport →</button>
+    <div class="card">
+      <input type="text"  id="cap-name"  placeholder="Pr&#233;nom et nom">
+      <input type="email" id="cap-email" placeholder="Email professionnel (pour recevoir le PDF)">
+      <div id="email-notify" class="notify"></div>
+      <button class="btn btn-p" id="btn-report" style="margin-top:4px;">Recevoir mon rapport PDF par email &#8594;</button>
     </div>
-    <button class="btn btn-sm" onclick="goReport()">Passer cette étape</button>
+    <button class="btn btn-sm" id="btn-skip">Voir le rapport sans email</button>
   </div>
 
-  <!-- REPORT -->
   <div id="s-report" class="screen">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;">
-      <div style="width:8px;height:8px;background:var(--teal);border-radius:50%;"></div>
-      <span style="font-size:11px;font-weight:600;color:var(--teal-dark);text-transform:uppercase;letter-spacing:.06em;">Rapport de diagnostic · DP-Tech</span>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+      <div style="width:8px;height:8px;background:var(--tl);border-radius:50%;"></div>
+      <span style="font-size:11px;font-weight:600;color:var(--tl-dk);text-transform:uppercase;letter-spacing:.06em;">Rapport de diagnostic &middot; DP-Tech</span>
     </div>
-
     <div class="card" style="margin-bottom:10px;">
-      <div class="score-big">
-        <div><span class="score-num" id="rep-score">—</span><span class="score-denom">/100</span></div>
-        <div id="rep-level-pill"></div>
+      <div style="text-align:center;padding:8px 0 6px;">
+        <span class="score-n" id="rep-sc">-</span><span class="score-d">/100</span>
       </div>
-      <p style="font-size:13px;color:var(--text-mid);text-align:center;line-height:1.5;margin-top:12px;" id="rep-summary"></p>
+      <div style="text-align:center;margin-top:4px;" id="rep-lv"></div>
+      <p style="font-size:13px;color:var(--t2);text-align:center;line-height:1.5;margin-top:12px;" id="rep-sm"></p>
     </div>
-
-    <div class="mcard-grid" id="rep-mcards" style="margin-bottom:10px;"></div>
-
+    <div class="mcards" id="rep-mc"></div>
     <div class="card" style="margin-bottom:10px;">
-      <p style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;">Score par dimension</p>
+      <p style="font-size:12px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;">Score par dimension</p>
       <div id="rep-bars"></div>
     </div>
-
     <div class="card" style="margin-bottom:10px;">
-      <p style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;">Radar de maturité</p>
-      <div style="position:relative;width:100%;height:280px;"><canvas id="radarChart"></canvas></div>
+      <p style="font-size:12px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;">Radar de maturit&#233;</p>
+      <div style="position:relative;width:100%;height:280px;"><canvas id="rc"></canvas></div>
     </div>
-
-    <p style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px;">Recommandations prioritaires</p>
+    <p style="font-size:13px;font-weight:600;margin-bottom:10px;">Recommandations prioritaires</p>
     <div id="rep-recs"></div>
-
-    <div class="cta-box">
-      <div class="cta-box-title">Audit approfondi gratuit — 30 minutes avec DP-Tech</div>
-      <div class="cta-box-text">Votre diagnostic révèle des axes d'amélioration concrets sur votre dispositif data bancaire. DP-Tech vous propose un audit sans engagement pour identifier les 3 actions à plus fort impact dans votre institution.</div>
-      <a href="https://duvalpeme.tech" target="_blank" class="btn btn-primary" style="display:block;text-decoration:none;">Réserver mon audit gratuit → duvalpeme.tech</a>
+    <button class="btn" id="btn-dl-pdf" style="margin-top:4px;">&#11123; T&#233;l&#233;charger le rapport PDF</button>
+    <div class="ctabox" style="margin-top:20px;">
+      <div class="ctabox-t">&#128197; R&#233;server votre audit gratuit &mdash; 30 minutes</div>
+      <div class="ctabox-d">Votre diagnostic r&#233;v&#232;le des axes d&#8217;am&#233;lioration concrets. Duval Pem&#233; (DP-Tech) vous propose un audit sans engagement pour identifier les 3 actions &#224; plus fort impact dans votre institution.</div>
+      <button class="btn btn-green" id="btn-calendly">&#128197; R&#233;server mon cr&#233;neau gratuit sur Calendly &#8594;</button>
     </div>
-
-    <button class="btn btn-sm" onclick="restart()" style="margin-top:4px;">Recommencer le diagnostic</button>
+    <button class="btn btn-sm" id="btn-restart" style="margin-top:8px;">Recommencer le diagnostic</button>
   </div>
 
-  <div class="footer">
-    <p>Outil développé par <a href="https://duvalpeme.tech" target="_blank">DP-Tech</a> · Consulting BI Bancaire CEMAC / UEMOA</p>
-    <p>Newsletter <a href="https://duvalpeme.tech" target="_blank">La BI pour la banque africaine</a> · Douala, Cameroun</p>
-    <p style="margin-top:6px;font-size:11px;">© 2025 DP-Tech · Tous droits réservés</p>
+  <div class="ftr">
+    <p>Outil d&#233;velopp&#233; par <a href="https://UlrichPeme.github.io" target="_blank">DP-Tech (Duval Pem&#233;)</a> &middot; Consulting BI Bancaire CEMAC / UEMOA</p>
+    <p>Newsletter <em>La BI pour la banque africaine</em> &middot; Douala, Cameroun</p>
+    <p style="margin-top:6px;font-size:11px;">&copy; 2025 DP-Tech &middot; Tous droits r&#233;serv&#233;s</p>
   </div>
-
 </div>
-
-<script>
-const DIMS = [
-  {name:"Qualité des données créances", short:"Données",    color:"#1D9E75", bg:"#E1F5EE", badge:"badge-teal"},
-  {name:"Automatisation du reporting",  short:"Reporting",  color:"#7F77DD", bg:"#EEEDFE", badge:"badge-purple"},
-  {name:"Conformité COBAC / DEC 2001",  short:"Conformité", color:"#BA7517", bg:"#FAEEDA", badge:"badge-amber"},
-  {name:"Surveillance NPL",             short:"NPL",        color:"#D85A30", bg:"#FAECE7", badge:"badge-coral"},
-  {name:"Gouvernance SI & traçabilité", short:"Gouvernance",color:"#378ADD", bg:"#E6F1FB", badge:"badge-blue"},
-];
-
-const QS = [
-  {d:0,q:"Vos données créances sont-elles consolidées dans une source unique ?",o:["Aucune consolidation — chaque agence gère ses propres données","Consolidation manuelle mensuelle par fichiers Excel","Entrepôt centralisé mais mis à jour manuellement","Source unique automatisée avec réconciliation quotidienne"]},
-  {d:0,q:"Quelle est la fraîcheur de vos données créances en production ?",o:["Données du mois précédent au mieux","Données hebdomadaires avec retard de 5 à 7 jours","Données quotidiennes via extraction manuelle","Données J-1 ou temps réel, automatisées"]},
-  {d:0,q:"Votre historique de données créances remonte à combien d'années ?",o:["Moins de 1 an disponible","1 à 2 ans, format hétérogène","2 à 3 ans, partiellement nettoyé","Plus de 3 ans, format homogène et documenté"]},
-  {d:0,q:"Les données créances sont-elles réconciliées avec le core banking ?",o:["Aucune réconciliation systématique","Réconciliation manuelle trimestrielle","Réconciliation mensuelle semi-automatisée","Réconciliation automatique avec piste d'audit complète"]},
-  {d:0,q:"Quelle est la qualité de la documentation de vos données créances ?",o:["Aucun dictionnaire de données ni documentation","Documentation partielle dans des fichiers dispersés","Dictionnaire existant mais non maintenu à jour","Dictionnaire complet, maintenu et partagé par les équipes"]},
-  {d:1,q:"Combien de jours pour produire votre rapport mensuel COBAC ?",o:["Plus de 7 jours ouvrables","5 à 7 jours ouvrables","3 à 5 jours ouvrables","Moins de 2 jours, processus automatisé"]},
-  {d:1,q:"La production du reporting repose-t-elle sur une seule personne ?",o:["Oui, tout dépend d'un seul analyste sans procédure écrite","Oui, avec une procédure partiellement documentée","2 à 3 personnes maîtrisent le processus","Processus documenté, automatisé, sans dépendance individuelle"]},
-  {d:1,q:"Utilisez-vous un outil BI dédié (Power BI, Tableau, etc.) ?",o:["Non, uniquement Excel et Word","Excel avec quelques macros basiques","Outil BI en cours de déploiement, usage partiel","Outil BI en production, dashboards actualisés automatiquement"]},
-  {d:1,q:"Comment vos équipes accèdent-elles aux données de reporting ?",o:["Extraction manuelle depuis le core banking sur demande","Exports planifiés envoyés par email","Connexion directe en lecture via requêtes SQL","Accès via couche sémantique ou entrepôt de données structuré"]},
-  {d:1,q:"Votre processus de reporting est-il documenté et auditable ?",o:["Aucune documentation des processus","Documentation informelle dans les têtes des analystes","Procédures écrites pour les états principaux","Procédures complètes, versionnées, testées et révisées annuellement"]},
-  {d:2,q:"Vos ratios prudentiels COBAC sont-ils calculés automatiquement ?",o:["Calculs entièrement manuels sous Excel","Semi-automatisé mais validation manuelle systématique","Automatisé pour les principaux ratios, sans alertes","Automatisé avec alertes, historique et piste d'audit complète"]},
-  {d:2,q:"Avez-vous reçu des observations COBAC lors du dernier contrôle ?",o:["Oui, plusieurs observations majeures avec mise en demeure","Oui, des observations mineures sur la forme ou les délais","Non, mais sans certitude totale sur la conformité","Non, conformité documentée et vérifiée en interne"]},
-  {d:2,q:"Vos états DEC 2001 sont-ils produits dans les délais réglementaires ?",o:["Souvent en retard, dérogations fréquentes","Parfois en retard selon la complexité du mois","Dans les délais mais avec tension sur les équipes","Toujours dans les délais avec marge de sécurité"]},
-  {d:2,q:"Vos rapprochements comptables liés aux créances sont-ils automatisés ?",o:["Entièrement manuels avec risque d'erreurs élevé","Partiellement automatisés, contrôles manuels importants","Principaux rapprochements automatisés","Rapprochements complets, automatisés et alertes en temps réel"]},
-  {d:2,q:"Disposez-vous d'une cartographie de vos obligations COBAC ?",o:["Aucune cartographie formalisée","Liste informelle connue des équipes","Cartographie documentée mais non tenue à jour","Cartographie complète, mise à jour et intégrée au calendrier de production"]},
-  {d:3,q:"Disposez-vous d'alertes automatiques sur les créances en souffrance ?",o:["Pas d'alerte — détection en fin de mois","Alerte manuelle basée sur le rapport mensuel","Alerte hebdomadaire semi-automatique par extraction","Alerte en temps réel dès dépassement des seuils d'impayés"]},
-  {d:3,q:"Votre taux de couverture NPL est-il suivi en temps réel ?",o:["Calculé manuellement une fois par mois","Calculé en fin de mois avec délai de 3 à 5 jours","Calculé hebdomadairement par requête SQL","Suivi quotidien automatique avec tableau de bord dédié"]},
-  {d:3,q:"Votre modèle de provisionnement est-il conforme IFRS 9 / ECL ?",o:["Provisionnement forfaitaire, non aligné IFRS 9","En cours de mise en conformité IFRS 9","Conforme mais calcul ECL encore manuel","Modèle ECL automatisé, calibré et auditable"]},
-  {d:3,q:"Pouvez-vous identifier les clients à risque de défaut dans les 90 jours ?",o:["Non, aucun système de détection précoce","Via des règles heuristiques simples dans Excel","Via un scoring basique avec critères limités","Via un modèle de scoring comportemental intégré"]},
-  {d:3,q:"Votre portefeuille de créances est-il segmenté pour l'analyse de risque ?",o:["Aucune segmentation, analyse globale uniquement","Segmentation par type de crédit uniquement","Segmentation multi-critères en cours de structuration","Segmentation complète : secteur, taille, garantie, géographie"]},
-  {d:4,q:"Existe-t-il un dictionnaire des données formalisé pour les créances ?",o:["Aucune documentation des données","Documentation partielle non maintenue","Dictionnaire existant mais incomplet","Dictionnaire complet, maintenu et accessible à tous"]},
-  {d:4,q:"Les accès aux données sensibles créances sont-ils tracés ?",o:["Aucun contrôle d'accès ni traçabilité","Contrôles basiques sur le core banking uniquement","Traçabilité partielle sur les outils BI","Traçabilité complète avec logs, alertes et revues régulières"]},
-  {d:4,q:"Disposez-vous d'une piste d'audit sur les modifications de données ?",o:["Aucune piste d'audit — modifications non tracées","Traçabilité dans le core banking uniquement","Piste d'audit partielle sur les outils principaux","Piste d'audit complète, archivée et consultable"]},
-  {d:4,q:"Vos outils BI et de reporting sont-ils intégrés au SI bancaire ?",o:["Silos complets — aucune intégration","Intégration via fichiers plats échangés manuellement","Intégration partielle via ETL ou connecteurs","Intégration complète avec actualisation automatique"]},
-  {d:4,q:"Avez-vous une politique de gouvernance des données formalisée ?",o:["Aucune politique de gouvernance des données","Règles informelles non documentées","Politique en cours de rédaction","Politique formalisée, approuvée et appliquée"]},
-];
-
-const DIM_COMMENTS = [
-  ["Votre qualité de données est critique. Sans données fiables, tous vos calculs NPL et ratios COBAC sont exposés à des erreurs majeures.","La base est présente mais fragile. Des processus manuels introduisent des risques d'erreurs qui se répercutent sur votre reporting.","Bonne fondation. Quelques automatisations ciblées peuvent encore améliorer la fiabilité et réduire la charge de travail.","Excellent niveau. Votre qualité de données est un atout compétitif réel pour votre institution."],
-  ["Votre reporting est entièrement manuel et vulnérable. Un départ clé peut bloquer toute la production réglementaire.","Le reporting fonctionne mais avec une forte dépendance humaine. Le risque opérationnel est élevé à chaque arrêté.","Bonne structuration. L'automatisation progressive réduit les risques et libère du temps pour l'analyse.","Reporting mature et industrialisé. Votre équipe peut se concentrer sur l'analyse plutôt que la production."],
-  ["Risque de non-conformité élevé. Des observations COBAC peuvent entraîner des pénalités ou restrictions d'activité.","La conformité est gérée mais avec beaucoup de tension. Les délais et la qualité peuvent être améliorés.","Bonne conformité opérationnelle. Des automatisations supplémentaires réduiraient encore les risques résiduels.","Conformité exemplaire. Vous êtes bien positionné face aux contrôles COBAC et aux évolutions réglementaires."],
-  ["Votre surveillance NPL est réactive et non préventive. Le coût de détection tardive est significatif pour votre bilan.","Surveillance en place mais avec des délais. Les alertes tardives limitent la capacité d'action préventive.","Bonne surveillance. Passer à la détection précoce automatisée réduirait encore votre coût du risque.","Surveillance NPL de haut niveau. Votre dispositif de détection précoce vous protège efficacement."],
-  ["Gouvernance SI très faible. Exposé à des risques de conformité, d'erreurs et de perte de données critiques.","Gouvernance basique. Les risques d'accès non autorisés et d'erreurs non tracées sont présents.","Gouvernance en développement. La formalisation restante est un investissement à faible coût et fort impact.","Gouvernance SI solide. Votre traçabilité et vos contrôles d'accès répondent aux exigences des auditeurs."],
-];
-
-const RECS = {
-  0:["Consolider les données créances dans une source unique","Mettre en place une réconciliation automatique avec le core banking","Construire un dictionnaire de données créances documenté"],
-  1:["Automatiser la production des états COBAC avec Power BI / Power Query","Documenter les procédures de reporting pour éliminer les dépendances clés","Réduire le délai de production mensuel à moins de 2 jours"],
-  2:["Automatiser le calcul des ratios prudentiels COBAC avec alertes de seuil","Mettre en place un calendrier DEC 2001 avec marges de sécurité","Formaliser la cartographie des obligations réglementaires COBAC"],
-  3:["Déployer un système d'alertes automatiques sur les créances en souffrance","Mettre en conformité le provisionnement avec les exigences IFRS 9 / ECL","Construire un modèle de scoring pour la détection précoce des défauts"],
-  4:["Mettre en place une traçabilité complète des accès aux données sensibles","Formaliser la politique de gouvernance des données créances","Intégrer les outils BI au SI bancaire pour éliminer les exports manuels"],
-};
-
-const LEVELS=[
-  {min:0,max:39,label:"Fragile",color:"#E24B4A",bg:"#FCEBEB",txt:"#791F1F"},
-  {min:40,max:59,label:"En développement",color:"#BA7517",bg:"#FAEEDA",txt:"#633806"},
-  {min:60,max:79,label:"Structuré",color:"#378ADD",bg:"#E6F1FB",txt:"#0C447C"},
-  {min:80,max:100,label:"Avancé",color:"#1D9E75",bg:"#E1F5EE",txt:"#085041"},
-];
-
-let prof={role:null,size:null,country:null};
-let ans=new Array(25).fill(null);
-let curQ=0;
-let radarInst=null;
-
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
-function goProfile(){show('s-profile');}
-function selP(key,el,val){
-  prof[key]=val;
-  const parent=el.parentElement;
-  parent.querySelectorAll('.sel-opt').forEach(e=>e.classList.remove('sel'));
-  el.classList.add('sel');
-  const ok=prof.role&&prof.size&&prof.country;
-  const b=document.getElementById('btn-startq');
-  b.disabled=!ok;b.style.opacity=ok?'1':'.4';b.style.cursor=ok?'pointer':'not-allowed';
-}
-function startQ(){curQ=0;renderQ();show('s-question');}
-
-function renderQ(){
-  const q=QS[curQ];
-  const dim=DIMS[q.d];
-  const pct=Math.round((curQ/25)*100);
-  document.getElementById('prog').style.width=pct+'%';
-  document.getElementById('q-counter').textContent='Question '+(curQ+1)+' / 25';
-  const lbl=document.getElementById('q-dlabel');
-  lbl.textContent=dim.name;lbl.style.color=dim.color;
-  document.getElementById('q-text').textContent=q.q;
-  const opts=document.getElementById('q-opts');
-  opts.innerHTML=q.o.map((o,i)=>`<button class="opt-btn${ans[curQ]===i?' sel':''}" onclick="pickAns(${i})">${o}</button>`).join('');
-  const bp=document.getElementById('btn-pq');
-  bp.style.display=curQ===0?'none':'block';
-  const bn=document.getElementById('btn-nq');
-  bn.textContent=curQ===24?'Voir mon résultat →':'Suivant →';
-  bn.disabled=ans[curQ]===null;bn.style.opacity=ans[curQ]===null?'.4':'1';
-}
-
-function pickAns(i){ans[curQ]=i;renderQ();}
-
-function getDimScore(d){
-  const idxs=QS.map((q,i)=>q.d===d?i:-1).filter(i=>i>=0);
-  const sum=idxs.reduce((s,i)=>s+(ans[i]!==null?ans[i]:0),0);
-  return Math.round((sum/(idxs.length*3))*20);
-}
-
-function nextQ(){
-  if(ans[curQ]===null)return;
-  const prevD=QS[curQ].d;
-  const isLast=curQ===24;
-  const dimEnd=isLast||(QS[curQ+1].d!==prevD);
-  if(dimEnd){showDimScore(prevD,isLast);}
-  else{curQ++;renderQ();}
-}
-function prevQ(){if(curQ>0){curQ--;renderQ();}}
-
-function showDimScore(d,isLast){
-  const sc=getDimScore(d);
-  const dim=DIMS[d];
-  const lvl=sc<8?0:sc<13?1:sc<17?2:3;
-  const lvlData=[
-    {label:"À améliorer",bg:"#FCEBEB",txt:"#791F1F"},
-    {label:"En développement",bg:"#FAEEDA",txt:"#633806"},
-    {label:"Satisfaisant",bg:"#E6F1FB",txt:"#0C447C"},
-    {label:"Maîtrisé",bg:"#E1F5EE",txt:"#085041"},
-  ][lvl];
-  const dn=document.getElementById('ds-dname');
-  dn.textContent=dim.name;dn.style.color=dim.color;
-  document.getElementById('ds-score').textContent=sc;
-  document.getElementById('ds-pill').innerHTML=`<span class="level-pill" style="background:${lvlData.bg};color:${lvlData.txt};">${lvlData.label}</span>`;
-  document.getElementById('ds-comment').textContent=DIM_COMMENTS[d][lvl];
-  const btn=document.getElementById('btn-dsnext');
-  btn.textContent=isLast?'Accéder à mon rapport →':'Dimension suivante →';
-  btn.dataset.last=isLast?'1':'0';
-  show('s-dimscore');
-}
-
-function dsContinue(){
-  const isLast=document.getElementById('btn-dsnext').dataset.last==='1';
-  if(isLast){show('s-capture');}
-  else{curQ++;renderQ();show('s-question');}
-}
-
-function goReport(){buildReport();show('s-report');}
-
-function buildReport(){
-  const dimScores=DIMS.map((_,i)=>getDimScore(i));
-  const total=Math.round(dimScores.reduce((a,b)=>a+b,0)/5*5);
-  const lv=LEVELS.find(l=>total>=l.min&&total<=l.max)||LEVELS[0];
-
-  document.getElementById('rep-score').textContent=total;
-  document.getElementById('rep-score').style.color=lv.color;
-  document.getElementById('rep-level-pill').innerHTML=`<span class="level-pill" style="background:${lv.bg};color:${lv.txt};">${lv.label}</span>`;
-
-  const roleLabels={DAF:'DAF',DC:'Directeur du crédit',DSI:'DSI',DR:'Directeur des risques'};
-  const roleLabel=roleLabels[prof.role]||'vous';
-  document.getElementById('rep-summary').textContent=`En tant que ${roleLabel}, votre dispositif data présente un niveau ${lv.label.toLowerCase()}. ${total<60?"Des axes prioritaires identifiés pour votre banque.":"Votre maturité data est un atout réel. Des optimisations ciblées peuvent encore renforcer votre position."}`;
-
-  const worst=dimScores.map((s,i)=>({s,i})).sort((a,b)=>a.s-b.s).slice(0,2);
-  document.getElementById('rep-mcards').innerHTML=[
-    {l:'Score global',v:total+'/100',s:lv.label,bg:lv.bg,tc:lv.txt},
-    {l:'Points forts',v:dimScores.filter(s=>s>=14).length+' / 5',s:'dimensions ≥ 14/20'},
-    {l:'À améliorer',v:dimScores.filter(s=>s<10).length+' / 5',s:'dimensions prioritaires'},
-  ].map(m=>`<div class="mcard"${m.bg?` style="background:${m.bg};"`:''}>
-    <div class="mcard-lbl">${m.l}</div>
-    <div class="mcard-val"${m.tc?` style="color:${m.tc};"`:''}">${m.v}</div>
-    <div class="mcard-sub">${m.s}</div>
-  </div>`).join('');
-
-  document.getElementById('rep-bars').innerHTML=DIMS.map((dim,i)=>`
-    <div class="dim-bar-row">
-      <div class="dim-bar-lbl">${dim.short}</div>
-      <div class="dim-bar-track"><div class="dim-bar-fill" style="width:${Math.round(dimScores[i]/20*100)}%;background:${dim.color};"></div></div>
-      <div class="dim-bar-val">${dimScores[i]}/20</div>
-    </div>`).join('');
-
-  const recs=[];
-  worst.forEach(x=>RECS[x.i].slice(0,2).forEach(r=>recs.push({dim:DIMS[x.i],text:r})));
-  recs.splice(3);
-  document.getElementById('rep-recs').innerHTML=recs.map((r,i)=>`
-    <div class="rec-item" style="border-left-color:${r.dim.color};">
-      <div class="rec-priority">Priorité ${i+1} · ${r.dim.short}</div>
-      <div class="rec-title">${r.text}</div>
-      <div class="rec-detail">Recommandation DP-Tech basée sur votre profil ${prof.size==='L'?'grande institution':prof.size==='M'?'institution intermédiaire':'petite institution'} CEMAC.</div>
-    </div>`).join('');
-
-  setTimeout(()=>{
-    const ctx=document.getElementById('radarChart');
-    if(!ctx)return;
-    if(radarInst){radarInst.destroy();radarInst=null;}
-    radarInst=new Chart(ctx,{
-      type:'radar',
-      data:{
-        labels:DIMS.map(d=>d.short),
-        datasets:[{
-          label:'Score',data:dimScores,fill:true,
-          backgroundColor:'rgba(29,158,117,0.15)',
-          borderColor:'#1D9E75',borderWidth:2,
-          pointBackgroundColor:'#1D9E75',pointRadius:5,
-        }]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{display:false}},
-        scales:{r:{
-          min:0,max:20,
-          ticks:{stepSize:5,color:'#888780',font:{size:10},backdropColor:'transparent'},
-          grid:{color:'rgba(0,0,0,0.08)'},
-          pointLabels:{color:'#444444',font:{size:12,weight:'500'}},
-          angleLines:{color:'rgba(0,0,0,0.08)'},
-        }}
-      }
-    });
-  },120);
-}
-
-function restart(){
-  ans=new Array(25).fill(null);curQ=0;
-  prof={role:null,size:null,country:null};
-  if(radarInst){radarInst.destroy();radarInst=null;}
-  document.querySelectorAll('.sel-opt').forEach(e=>e.classList.remove('sel'));
-  const b=document.getElementById('btn-startq');
-  b.disabled=true;b.style.opacity='.4';b.style.cursor='not-allowed';
-  show('s-intro');
-}
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="diagnostic.js"></script>
 </body>
 </html>
